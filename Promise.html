@@ -4,26 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .parent {
-            position: relative;
-            width: 400px;
-            height: 400px;
-            background-color: #f40;
-        }
-        .child {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            left: 100%;
-            background-color: #ddd;
-        }
-    </style>
+    <title>手写Promise</title>
 </head>
 <body>
-    <div class="parent">
-        <div class="child"></div>
+    <div>
+        <input type="text" id="startTime">秒后执行<br />
+        <button onclick="handleClick()">执行</button>
     </div>
     <script>
         function Promise(excutor) {
@@ -49,7 +35,6 @@
                 });
             }
             try {
-                debugger;
                 excutor(resolve,reject);
             } catch (error) {
                 reject(error);
@@ -88,17 +73,16 @@
         var Pro = function (time) {
             //返回一个Promise对象
             return new Promise(function (resolve, reject) {
-                console.log('123');
                 //模拟接口调用
                 setTimeout(function () {
                     //这里告诉Promise 成功了，然后去执行then方法的第一个函数
-                    resolve('成功返回');
+                    resolve('start');
                 }, time);
             })
         };
-        (function(){
-            console.log('start');
-            Pro(3000)
+        function handleClick() {
+            var val = Number(document.querySelector('#startTime').value);
+            Pro(val)
             .then(function(data){
                 console.log(data);
                 return Pro(5000);})
@@ -106,8 +90,7 @@
                 console.log(data);
                 console.log('end');
             })
-        })();
-         
+        }
     </script>
 </body>
 </html>
